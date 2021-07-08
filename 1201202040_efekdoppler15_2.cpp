@@ -112,13 +112,16 @@ int main(){
    //tekan q (quit) / 0 (false), untuk berhenti
    
    Doppler frekuensi;
-   char opt;
+   
+   //mencegah terjadinya switch case yang berulang seperti 123
+   //maka hanya mengambil satu karakter
+   char opt[1];
    menu();
    while (true){
       std::cout << "pilihanmu: "; std::cin >> opt;
-      if(opt == 'q' || opt == '0') break;
+      if(*opt == 'q' || *opt == '0') break;
       
-      switch(opt){
+      switch(*opt){
          case '1':
             frekuensi.set();
             break;
