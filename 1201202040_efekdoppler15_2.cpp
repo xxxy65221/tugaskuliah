@@ -61,6 +61,9 @@ class Doppler{
                      <<"*   tekan 0 / q untuk berhenti              *\n"                     
                      <<"*=========================================*/\n";
       }
+      void check_all(){
+         printf("fp= %d, fs= %d, v= %d, vs= %d, vp= %d\n", fp, fs, v, vs, vp);
+      }
       void set(){
         std::cout << "\nsilahkan mengisi variable yang anda ketahui\n";
         std::cout << "yang tidak anda tau, silahkan diisi dengan nilai 0\n";
@@ -73,12 +76,12 @@ class Doppler{
       //untuk menghindari error, maka kita mereturn 0 jika v = 0
       int hasil_fs(){
          if (v == 0 ) return 0;
-         if(fs == 0) fs = ((v + vs)*fp) / (v + vp);
+         if(fs == 0) fs = (float) (v + vs) / (v + vp) * fp;
          return fs;
        }
       int hasil_fp(){ 
          if (v == 0) return 0;
-         if(fp == 0) fp = ((v + vp)*fs) / (v + vs);
+         if(fp == 0) fp = (float) (v + vp) / (v + vs) * fs;
          return fp;
       }
       //mengubah km/j ke m/s
@@ -116,20 +119,24 @@ int main(){
    //mencegah terjadinya switch case yang berulang seperti 123
    //maka hanya mengambil satu karakter
    char opt[1];
+   int fp=0, fs=0; //menyimpan hasil fp dan fs
    menu();
    while (true){
       std::cout << "pilihanmu: "; std::cin >> opt;
       if(*opt == 'q' || *opt == '0') break;
-      
+
       switch(*opt){
          case '1':
             frekuensi.set();
+            //frekuensi.check_all();
+            fp = frekuensi.hasil_fs();
+            fs = frekuensi.hasil_fp();
             break;
          case '2':
-            std::cout << "fs = " << frekuensi.hasil_fs() << "\n";
+            std::cout << "fs = " << fs << "\n";
             break;
          case '3':
-            std::cout << "fp = " << frekuensi.hasil_fp() << "\n";
+            std::cout << "fp = " << fp << "\n";
             break;
          case '4':
             int kmj;
@@ -146,6 +153,7 @@ int main(){
             std::cout << "pilihan " << opt << " tidak tersedia\n";
             break;
       }
+      
    }
    std::cout << "bye-bye\n";
    return 0;
