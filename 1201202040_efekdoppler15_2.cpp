@@ -1,6 +1,8 @@
 /*========================================*
 *  Nursyahjaya ramadaniputra              *
 *  120202040                              *
+*  github.com/nursyah21                   *
+*                                         *
 *  boleh dicopas!!                        *
 *  dengan syarat anda paham dengan apa    *
 *  yang anda tulis                        *
@@ -68,14 +70,14 @@ class Doppler{
         std::cout << "vs(m/s) = "; std:: cin >> vs;
         std::cout << "vp(m/s) = "; std:: cin >> vp;
       }
-      
+      //untuk menghindari error, maka kita mereturn 0 jika v = 0
       int hasil_fs(){
-         if (v == 0 || vp == 0 || vs == 0) return 0;
+         if (v == 0 ) return 0;
          if(fs == 0) fs = ((v + vs)*fp) / (v + vp);
          return fs;
        }
       int hasil_fp(){ 
-         if (v == 0 || vp == 0 || vs == 0) return 0;
+         if (v == 0) return 0;
          if(fp == 0) fp = ((v + vp)*fs) / (v + vs);
          return fp;
       }
@@ -145,4 +147,3 @@ int main(){
    std::cout << "bye-bye\n";
    return 0;
 }
-
