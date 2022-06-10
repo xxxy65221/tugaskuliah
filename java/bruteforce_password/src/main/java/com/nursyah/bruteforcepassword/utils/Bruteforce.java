@@ -1,8 +1,8 @@
-package com.nursyah.bruteforcepassword;
+package com.nursyah.bruteforcepassword.utils;
 
 public class Bruteforce {
-    private String password;
-    private char[] combination;
+    private final String password;
+    private final char[] combination;
     private int lengthPassword = 1;
     private String guessPassword = "";
     private boolean found = false;
@@ -26,14 +26,13 @@ public class Bruteforce {
     private void bruteforceMain(int length, String temp){
         if(length == 0){
             guessPassword = temp;
-            if(checkPassword()) {
-                found = true;
-            }
+            if(checkPassword()) found = true;
+
             return;
         }
-        for(int i=0; i < combination.length; i++){
-            String newtemp = temp+combination[i];
-            if(!found) bruteforceMain(length-1, newtemp);
+        for (char c : combination) {
+            String newtemp = temp + c;
+            if (!found) bruteforceMain(length - 1, newtemp);
         }
     }
 

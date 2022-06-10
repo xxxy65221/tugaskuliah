@@ -1,6 +1,4 @@
-package com.nursyah.bruteforcepassword;
-
-import java.util.concurrent.atomic.AtomicBoolean;
+package com.nursyah.bruteforcepassword.utils;
 
 public class BruteforceExtends extends Bruteforce implements Runnable{
 

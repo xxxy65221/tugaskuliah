@@ -1,55 +1,63 @@
 package com.nursyah.bruteforcepassword;
 
-import java.io.IOException;
+import com.nursyah.bruteforcepassword.utils.BruteforceExtends;
+import com.nursyah.bruteforcepassword.utils.Results;
+import com.nursyah.bruteforcepassword.utils.Utils;
 
 public class Main {
-    final static String AlphabetLowerCase = "abcdefghijklmnopqrstuvwxyz";
-    final static String AlphabetUpperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    final static String number = "0123456789";
-    final static String other = "`~!@#$%^&*()-_+={[}]|\\;:'\"<,>.?/ ";
-    Thread t1;
-    final long waitingTime = 120 * 1000;
-    Bruteforce password;
-    long start;
+    private final String[] Combination = new Utils().getCombination();
+    private long timeLimit =180 * 1000;
+    private Thread t1;
+    private BruteforceExtends bruteforce;
 
-    public static void main(String []args) throws InterruptedException, IOException {
-        String password="";
-        try {
-            password = args[0];
-        }catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("please add your password\njava -jar bruteforce_password.jar pass");
-            System.exit(1);
-        }
-
+    public static void main(String []args) throws InterruptedException {
         Main main = new Main();
-        main.password = new BruteforceExtends(password, AlphabetLowerCase);
-
-
-        main.t1 = new Thread((Runnable) main.password);
-        main.t1.start();
-
-        main.waiting();
+        main.terminal(args);
     }
 
-    private void waiting() throws InterruptedException, IOException {
-        start = System.currentTimeMillis();
+    private void terminal(String []args) throws InterruptedException {
+        if(args.length == 0 || args.length > 2) new Utils().showOptions();
+
+        String guess = args[0];
+        String combination = String.join("",Combination);
+        combination = Combination[0]+Combination[1]+Combination[2];
+        int startLengthPassword = 1;
+
+        if(args.length == 2 && args[1].equals("-i")){
+            Results res = new Utils().interactive();
+            combination = res.Combination;
+            startLengthPassword = res.Startlength;
+            timeLimit = res.Timelimit;
+        }
+
+        new Utils().showSystemInfo();
+        bruteforce = new BruteforceExtends(guess, combination);
+        bruteforce.changeLength(startLengthPassword);
+
+        t1 = new Thread(bruteforce);
+        t1.start();
+
+        waiting();
+    }
+    private void waiting() throws InterruptedException {
+        long start = System.currentTimeMillis();
 
         while(true){
             System.out.printf("\rrun : %ds | ", (System.currentTimeMillis() - start) / 1000);
-            System.out.printf("guesspassword: %s", password.showguessPassword());
-
+            System.out.printf("guess password: %s", bruteforce.showguessPassword());
 
             Thread.sleep(50);
             if(!t1.isAlive()){
-                System.out.printf("\npassword: %s\n", password.showguessPassword());
+                System.out.printf("\npassword: %s\n", bruteforce.showguessPassword());
                 System.out.printf("took %dms\n", System.currentTimeMillis() - start);
                 break;
             }
-            if(System.currentTimeMillis() - start >= waitingTime){
+            if(System.currentTimeMillis() - start > timeLimit + 100){
                 t1.stop();
-                System.out.printf("\nguess password is stopped because took so long time\n");
+                System.out.print("\nguess password is stopped because took so long time\n");
                 break;
             }
         }
     }
+
 }
