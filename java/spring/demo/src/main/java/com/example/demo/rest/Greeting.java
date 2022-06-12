@@ -1,4 +1,4 @@
-package com.example.demo.res;
+package com.example.demo.rest;
 
 public class Greeting {
     private final long id;
