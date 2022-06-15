@@ -1,9 +1,6 @@
 package com.nursyah.bruteforce_multithread;
 
-//import com.nursyah.bruteforce_multithread.threading.Bruteforce;
-
 import com.nursyah.bruteforce_multithread.threading.Bruteforce;
-
 
 public class Main {
     final static String c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
