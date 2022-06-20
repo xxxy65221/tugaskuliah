@@ -27,30 +27,8 @@ public class Bruteforce {
 
         long start = System.currentTimeMillis();
         while(!found && !pass.equals("")){
-            switch (core){
-                case 1:
-                    System.out.printf("\rtime: %ds | guess1: %s",(System.currentTimeMillis()-start)/1000, allguess[0]);
-                    break;
-                case 2:
-                    System.out.printf("\rtime: %ds | guess1: %s guess2: %s",(System.currentTimeMillis()-start)/1000, allguess[0], allguess[1]);
-                    break;
-                case 4:
-                    System.out.printf("\rtime: %ds | guess1: %s guess2: %s guess3: %s guess4: %s",
-                            (System.currentTimeMillis()-start)/1000, allguess[0], allguess[1], allguess[2], allguess[3]);
-                    break;
-                case 8:
-                    System.out.printf("\rtime: %ds | guess1: %s guess2: %s guess3: %s guess4: %s  guess5: %s guess6: %s guess7: %s guess8: %s",
-                            (System.currentTimeMillis()-start)/1000, allguess[0], allguess[1], allguess[2], allguess[3], allguess[4], allguess[5],
-                            allguess[6], allguess[7]);
-                    break;
-                case 16:
-                    System.out.printf("\rtime: %ds | guess1: %s guess2: %s guess3: %s guess4: %s  guess5: %s guess6: %s guess7: %s guess8: %s" +
-                                    "guess9: %s guess10: %s guess11: %s guess12: %s  guess13: %s guess14: %s guess15: %s guess16: %s",
-                            (System.currentTimeMillis()-start)/1000, allguess[0], allguess[1], allguess[2], allguess[3], allguess[4], allguess[5],
-                            allguess[6], allguess[7], allguess[8], allguess[9], allguess[10], allguess[11], allguess[12], allguess[13],
-                            allguess[14], allguess[15]);
-                    break;
-            }
+            System.out.printf("\rtime: %ds |", (System.currentTimeMillis()-start)/1000);
+            for(int i=0; i < core; i++) System.out.printf(" guess%d: %s |",i+1, allguess[i]);
             Thread.sleep(50);
         }
         System.out.printf("\ntook time: %dms, password is: %s\n",System.currentTimeMillis()-start, guess);
